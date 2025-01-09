@@ -4,8 +4,10 @@ import indexRoutes from './routes/index.routes.js'
 
 import {PORT} from './config.js'
 
+const cors = require('cors');
 const app = express( )
 
+app.use(cors());
 app.use(express.json())
 
 app.use(indexRoutes)

@@ -1,10 +1,8 @@
 import express from 'express'
 import rentasRoutes from './routes/rentas.routes.js'
 import indexRoutes from './routes/index.routes.js'
+import cors from 'cors';
 
-import {PORT} from './config.js'
-
-const cors = require('cors');
 const app = express( )
 
 app.use(cors());

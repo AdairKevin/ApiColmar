@@ -3,7 +3,7 @@ import {pool} from '../db.js'
 export const getRentas = async (req, res) => {
 
     try {
-        const [rows] = await pool.query('SELECT * FROM rentasPasto')
+        const [rows] = await pool.query('SELECT * FROM rentasPastos')
         res.json(rows)
     } catch (error) {
         return res.status(500).json({
@@ -15,7 +15,7 @@ export const getRentas = async (req, res) => {
 export const getRentaById = async (req, res) => {
 
     try {
-        const [rows] = await pool.query('SELECT * FROM rentasPasto WHERE id = ?', [req.params.id])
+        const [rows] = await pool.query('SELECT * FROM rentasPastos WHERE id = ?', [req.params.id])
     
         if(rows.length <=0){
             return res.status(404).json({
@@ -37,7 +37,7 @@ export const createRentas = async (req, res) => {
     try {
         const {fecha, metros, precio, total} = req.body
     
-        const [rows] = await pool.query('INSERT INTO rentasPasto (fecha,metros,precio,total) VALUES (?,?,?,?)' , [fecha, metros, precio, total])
+        const [rows] = await pool.query('INSERT INTO rentasPastos (fecha,metros,precio,total) VALUES (?,?,?,?)' , [fecha, metros, precio, total])
     
         res.send({
             id: rows.insertId,
@@ -61,7 +61,7 @@ export const updateRentas = async (req, res) => {
     
         const{fecha, metros, precio, total} = req.body
     
-        const [result] = await pool.query('UPDATE rentasPasto SET fecha = IFNULL(?, fecha) , metros = IFNULL(?, metros ), precio = IFNULL(?, precio), total = IFNULL(?, total) WHERE id = ?', [fecha, metros, precio, total, id])
+        const [result] = await pool.query('UPDATE rentasPastos SET fecha = IFNULL(?, fecha) , metros = IFNULL(?, metros ), precio = IFNULL(?, precio), total = IFNULL(?, total) WHERE id = ?', [fecha, metros, precio, total, id])
     
         console.log(result)
     
@@ -69,7 +69,7 @@ export const updateRentas = async (req, res) => {
             message: 'Renta no encontrada'
         })
     
-        const [rows] = await pool.query('SELECT * FROM rentasPasto WHERE id = ?', [req.params.id])
+        const [rows] = await pool.query('SELECT * FROM rentasPastos WHERE id = ?', [req.params.id])
     
         res.json(rows)        
     } catch (error) {
@@ -82,7 +82,7 @@ export const updateRentas = async (req, res) => {
 export const deleteRentas = async(req, res) => {
 
     try {
-        const [result] = await pool.query('DELETE FROM rentasPasto WHERE id = ?', [req.params.id])
+        const [result] = await pool.query('DELETE FROM rentasPastos WHERE id = ?', [req.params.id])
     
         if(result.affectedRows <=0){
             return res.status(404).json({
